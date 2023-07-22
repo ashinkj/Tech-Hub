@@ -8,6 +8,7 @@ from django.views.generic import (
     UpdateView,
     DeleteView
 )
+from django.db.models import Q
 from .models import Post
 
 
@@ -16,6 +17,16 @@ def home(request):
         'posts': Post.objects.all()
     }
     return render(request, 'blog/home.html', context)
+
+def search_user(request):
+    searched = request.GET.get('searched')
+    posts = []
+
+    if searched:
+        posts = Post.objects.filter(author__username__icontains=searched)
+
+    return render(request, 'blog/search_user.html', {'searched': searched, 'posts': posts})
+  
 
 
 class PostListView(ListView):
