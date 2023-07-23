@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404,redirect
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.views.generic import (
@@ -10,6 +10,7 @@ from django.views.generic import (
 )
 from django.db.models import Q
 from .models import Post
+from django.urls import reverse
 
 
 def home(request):
@@ -17,17 +18,15 @@ def home(request):
         'posts': Post.objects.all()
     }
     return render(request, 'blog/home.html', context)
-
+     
 def search_user(request):
     searched = request.GET.get('searched')
-    posts = []
-
-    if searched:
-        posts = Post.objects.filter(author__username__icontains=searched)
-
-    return render(request, 'blog/search_user.html', {'searched': searched, 'posts': posts})
-  
-
+    if searched and searched.strip():
+        post = Post.objects.filter(author__username__icontains=searched).first()
+        
+        if post:
+            return redirect(reverse('user-posts', kwargs={'username': post.author.username}))
+    return render(request, 'blog/search_user.html', {'searched': searched})
 
 class PostListView(ListView):
     model = Post
