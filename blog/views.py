@@ -8,17 +8,22 @@ from django.views.generic import (
     UpdateView,
     DeleteView
 )
-from django.db.models import Q
 from .models import Post
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
 
 
-def home(request):
-    context = {
-        'posts': Post.objects.all()
-    }
-    return render(request, 'blog/home.html', context)
-     
+@login_required
+def like_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+
+    if request.user in post.likes.all():
+        post.likes.remove(request.user)
+    else:
+        post.likes.add(request.user)
+    return HttpResponseRedirect(reverse('post-detail',args=[str(pk)]))
+
 def search_user(request):
     searched = request.GET.get('searched')
     if searched and searched.strip():
@@ -28,6 +33,12 @@ def search_user(request):
             return redirect(reverse('user-posts', kwargs={'username': post.author.username}))
     return render(request, 'blog/search_user.html', {'searched': searched})
 
+def home(request):
+    context = {
+        'posts': Post.objects.all()
+    }
+    return render(request, 'blog/home.html', context)
+     
 class PostListView(ListView):
     model = Post
     template_name = 'blog/home.html'  # <app>/<model>_<viewtype>.html
