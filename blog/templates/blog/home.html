@@ -10,22 +10,7 @@
             </div>
             <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
             <p class="article-content">{{ post.content }}</p>
-             <div class="d-inline-flex p-2">
-            {% if user.is_authenticated %}
-           
-                <form action="{% url 'like-post' post.pk %}" method="post">
-                    {% csrf_token %}
-                    {% if user in post.likes.all %}
-                        <button type="submit" class="btn btn-danger">Unlike</button>
-                        
-                    {% else %}
-                        <button type="submit" class="btn btn-primary">Like</button>
-                    {% endif %}
-                </form>
-                <p class="ml-2 pt-2">Likes Count: {{ post.likes.count }}</p>
-            {% endif %}
-           
-          </div>
+             
           </div>
      </article>
    

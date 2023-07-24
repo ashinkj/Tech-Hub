@@ -21,14 +21,30 @@
             <form action="{% url 'like-post' post.pk %}" method="post">
                 {% csrf_token %}
                 {% if user in post.likes.all %}
-                    <button type="submit" class="btn btn-danger">Unlike</button>
+                    <button type="submit" class="btn btn-danger"> <i class="fa fa-thumbs-up"></i></button>
                     
                 {% else %}
-                    <button type="submit" class="btn btn-primary">Like</button>
+                    <button type="submit" class="btn btn-primary"> <i class="fa fa-thumbs-up"></i></button> 
+                    
                 {% endif %}
             </form>
-          <p class="ml-2 pt-2">Likes Count: {{ post.likes.count }}</p>
+         <p class="ml-2 pt-2"> {{ post.likes.count }} Likes</p>
+         
         {% endif %}
     </div>
+    <h2>comments....</h2>
+                {% if not post.comments.all %}
+                    <hr>
+                    
+                    <p>No comments </p>
+                {% else %}
+                    <hr>
+                    {% for comment in post.comments.all %}
+                    <strong>{{comment.name}}-{{comment.date_posted}}</strong>
+                    <p>{{comment.comment_body}}</p>
+                    {% endfor %}
+                {% endif %} 
+               
+      
   </article>
 {% endblock content %}
