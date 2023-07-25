@@ -8,10 +8,11 @@ from django.views.generic import (
     UpdateView,
     DeleteView
 )
-from .models import Post
+from .models import Post,Comment
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
+from .forms import CommentForm
 
 
 @login_required
@@ -58,8 +59,59 @@ class UserPostListView(ListView):
         return Post.objects.filter(author=user).order_by('-date_posted')
 
 
+
 class PostDetailView(DetailView):
     model = Post
+
+class CommentCreateView(ListView):
+    model = Post
+    template_name = 'blog/add_comment.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = CommentForm()  # Add the CommentForm to the context
+        return context
+
+    def post(self, request, *args, **kwargs):
+        post_id = kwargs['pk']  # Get the post ID from the URL parameters
+        form = CommentForm(request.POST)
+
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post_id = post_id
+            comment.user = request.user
+            comment.save()
+            return redirect('post-detail', pk=post_id)
+
+        # If the form is not valid, re-render the page with the form errors
+        return render(request, self.template_name, {'form': form})
+
+  
+
+# def user_comment(request, *args, **kwargs):
+#         post = get_object_or_404(Post, pk=kwargs['pk'])  # Fetch the specific post using pk from kwargs
+#         comments = Comment.objects.filter(post=post).order_by('-date')
+
+#         if request.method == 'POST':
+#             form = CommentForm(request.POST, request.FILES)
+#             if form.is_valid():
+#                 comment = form.save(commit=False)
+#                 comment.user = request.user
+#                 comment.post = post
+#                 comment.save()
+#                 return HttpResponseRedirect(reverse('post_list.html'))
+
+#         else:
+#             form = CommentForm()
+
+#         context = {
+#             'form': form,
+#             'post': post,
+#             'comments': comments  
+#         }
+
+#         return render(request, 'post_list.html', context)
+
 
 
 class PostCreateView(LoginRequiredMixin, CreateView):

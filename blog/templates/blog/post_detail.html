@@ -1,4 +1,5 @@
 {% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
 {% block content %}
   <article class="media content-section">
     <img class="rounded-circle article-img" src="{{ object.author.profile.image.url }}">
@@ -32,7 +33,23 @@
          
         {% endif %}
     </div>
-    <h2>comments....</h2>
+    <div class="card-body">
+      {% if new_comment %}
+      <div class="alert alert-success" role="alert">
+        Your comment is awaiting moderation
+      </div>
+      {% else %}
+      <h3><a href="{% url 'user-comment' post.id%}"> Leave a comment</h3></a>
+      <!-- <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit Comment</button>
+      </form> -->
+      {% endif %}
+    </div>
+
+    </form>
+    
                 {% if not post.comments.all %}
                     <hr>
                     
@@ -40,11 +57,22 @@
                 {% else %}
                     <hr>
                     {% for comment in post.comments.all %}
-                    <strong>{{comment.name}}-{{comment.date_posted}}</strong>
+                    <strong>{{comment.user}}-{{comment.date_posted}}</strong>
                     <p>{{comment.comment_body}}</p>
                     {% endfor %}
                 {% endif %} 
                
-      
+                <!-- {% for comment in comments %}
+                <div class="comments" style="padding: 10px;">
+                  <p class="font-weight-bold">
+                    {{ comment.name }}
+                    <span class=" text-muted font-weight-normal">
+                      {{ comment.created_on }}
+                    </span>
+                  </p>
+                  {{ comment.body | linebreaks }}
+                </div>
+                {% endfor %} -->
+     
   </article>
 {% endblock content %}
