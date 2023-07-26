@@ -1,20 +1,31 @@
 {% extends "blog/base.html" %}
 {% block content %}
+    
+    <br>
     {% for post in posts %}
-        <article class="media content-section">
-          <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
-          <div class="media-body">
-            <div class="article-metadata">
+    <div class="container  pt-5 pb-5" id="article-grid">
+      <div >
+    
+        <div class="box-effect text-center">
+          <!-- <a href="{% url 'post-detail' post.id %}"> -->
+          <div class="article-card d-inline-flex p-2">
+          <div class="article-img">
+            <img src="{{ post.author.profile.image.url }}">
+          </div>
+    
+            <div class="article-meta text-left">
+              <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
+              <p style="text-align: justify;">{{ post.content }}</p>
+              
               <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
               <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
             </div>
-            <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
-            <p class="article-content">{{ post.content }}</p>
-             
           </div>
-     </article>
+          </a>
+        </div>
+      </div>
+    </div>
    
-    <br>
     {% endfor %}
     {% if is_paginated %}
 

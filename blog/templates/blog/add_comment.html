@@ -1,7 +1,8 @@
 {% extends "blog/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-    <div class="content-section">
+<br><br>
+    <div class="content-section mt-5 box-effect p-4 pt-5">
         <form method="POST">
             {% csrf_token %}
             <fieldset class="form-group">
@@ -10,7 +11,7 @@
                
             
             <div class="form-group">
-                <button class="btn btn-outline-info" type="submit">Sign Up</button>
+                <button class="btn box-effect update-button" type="submit">Add comment</button>
             </div>
         </form>
     </div>

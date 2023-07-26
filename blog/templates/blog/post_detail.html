@@ -1,20 +1,21 @@
 {% extends "blog/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-  <article class="media content-section">
+  <br>
+  <article class="media content-section mt-5 box-effect p-5">
     <img class="rounded-circle article-img" src="{{ object.author.profile.image.url }}">
     <div class="media-body">
       <div class="article-metadata">
         <a class="mr-2" href="{% url 'user-posts' object.author.username %}">{{ object.author }}</a>
         <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
         {% if object.author == user %}
-          <div>
-            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' object.id %}">Update</a>
-            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' object.id %}">Delete</a>
+          <div class="update-button">
+            <a class="btn box-effect btn-sm mt-1 mb-1 " href="{% url 'post-update' object.id %}" style="color: black;">Update</a>
+            <a class="btn box-effect btn-sm mt-1 mb-1 " href="{% url 'post-delete' object.id %}" style="color: black;">Delete</a>
           </div>
         {% endif %}
       </div>
-      <h2 class="article-title">{{ object.title }}</h2>
+      <h2 class="article-title p-2 mt-1 mb-3">{{ object.title }}</h2>
       <p class="article-content">{{ object.content }}</p>
       <div class="d-inline-flex p-2">
         {% if user.is_authenticated %}
@@ -22,10 +23,10 @@
             <form action="{% url 'like-post' post.pk %}" method="post">
                 {% csrf_token %}
                 {% if user in post.likes.all %}
-                    <button type="submit" class="btn btn-danger"> <i class="fa fa-thumbs-up"></i></button>
+                    <button type="submit" class="btn box-effect"> <i class="fa fa-thumbs-up"></i></button>
                     
                 {% else %}
-                    <button type="submit" class="btn btn-primary"> <i class="fa fa-thumbs-up"></i></button> 
+                    <button type="submit" class="btn box-effect"> <i class="fa fa-thumbs-up"></i></button> 
                     
                 {% endif %}
             </form>

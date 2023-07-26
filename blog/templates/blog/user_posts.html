@@ -2,18 +2,18 @@
 {% block content %}
    
     
-    <h1 class="mb-3">Posts by {{ view.kwargs.username }} ({{ page_obj.paginator.count }})</h1>
+    <h1 class="mt-5 pt-5 pb-3">Posts by {{ view.kwargs.username }} ({{ page_obj.paginator.count }})</h1>
     {% for post in posts %}
-        <article class="media content-section">
+        <article class="media content-section box-effect p-5">
           <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
           <div class="media-body">
-            <div class="article-metadata">
+            <div class="article-metadata mb-2">
               <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
               <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
             </div>
-            <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
-            <p class="article-content">{{ post.content }}</p>
-            <div class="d-inline-flex p-2">
+            <h2><a class="article-title p-2" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
+            <p class="article-content p-2">{{ post.content }}</p>
+            <!-- <div class="d-inline-flex p-2">
               {% if user.is_authenticated %}
              
                   <form action="{% url 'like-post' post.pk %}" method="post">
@@ -27,8 +27,8 @@
                   </form>
                   <p class="ml-2 pt-2">Likes Count: {{ post.likes.count }}</p>
               {% endif %}
-          </div>
-        </article>
+          </div> -->
+        </article><br>
     {% endfor %}
     {% if is_paginated %}
 
