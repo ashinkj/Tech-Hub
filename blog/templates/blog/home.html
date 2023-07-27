@@ -1,51 +1,87 @@
 {% extends "blog/base.html" %}
 {% block content %}
-    
-    <br>
-    {% for post in posts %}
-    <div class="container pt-5 pb-5" id="article-grid">
-      <div >
-    
-        <div class="box-effect text-center col-lg-12">
-          <!-- <a href="{% url 'post-detail' post.id %}"> -->
-          <div class="article-card d-inline-flex p-2">
-          <div class="article-img">
-            <img src="{{ post.author.profile.image.url }}">
+
+
+{% for post in posts %}
+         
+<section class="blog-post-area section-margin mt-4">
+  <div class="container ">
+    <div class="row ">
+      <div class="col-lg-12">
+        <div class="single-recent-blog-post">
+          <div class="thumb">
+            <img class="img-fluid" src="{{ post.image.url }}" alt="">
+            <ul class="thumb-info">
+              <li><a href="{% url 'user-posts' post.author.username %}"><i class="ti-user"></i>{{ post.author }}</a></li>
+              <li><a href="#"><i class="ti-notepad"></i>{{ post.date_posted|date:"F d, Y" }}</a></li>
+              <li><a href="#"><i class="ti-themify-favicon"></i></a></li>
+            </ul>
           </div>
-    
-            <div class="article-meta text-left">
-              <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
-              <p style="text-align: justify;">{{ post.content }}</p>
-              
-              <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
-              <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
-            </div>
+          <div class="details mt-20">
+            <a href="{% url 'post-detail' post.id %}">
+              <h3> {{ post.title }}</h3>
+            </a>
+            
+            <p>{{ post.content }}</p>
+            <a class="button" href="{% url 'post-detail' post.id %}">Read More <i class="ti-arrow-right"></i></a>
           </div>
-          </a>
         </div>
       </div>
     </div>
-   
-    {% endfor %}
-    {% if is_paginated %}
 
-      {% if page_obj.has_previous %}
-        <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
-        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        {% endfor %}
+        
+    
+        {% if is_paginated %}
+
+          
+    
+        <div class="row">
+          <div class="col-lg-12">
+              <nav class="blog-pagination justify-content-center d-flex">
+                
+
+                {% if page_obj.has_previous %}
+                  <a class="btn btn-outline-info mb-4 m-1" href="?page=1">First</a>
+                  <a class="btn btn-outline-info mb-4 m-1" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                {% endif %}
+          
+                {% for num in page_obj.paginator.page_range %}
+                  {% if page_obj.number == num %}
+                    <a class="btn btn-info mb-4 m-1" href="?page={{ num }}">{{ num }}</a>
+                  {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <a class="btn btn-outline-info mb-4 m-1" href="?page={{ num }}">{{ num }}</a>
+                  {% endif %}
+                {% endfor %}
+          
+                {% if page_obj.has_next %}
+                  <a class="btn btn-outline-info mb-4 m-1" href="?page={{ page_obj.next_page_number }}">Next</a>
+                  <a class="btn btn-outline-info mb-4 m-1" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                {% endif %}
+          
+              
+                            </nav>
+          </div>
+        </div>
+      </div>
       {% endif %}
+       <!-- Start Blog Post Siddebar -->
+       <div class="col-lg-6 sidebar-widgets">
+        <div class="widget-wrap">
+          <div class="single-sidebar-widget newsletter-widget">
+            <h4 class="single-sidebar-widget__title">Newsletter</h4>
+            <div class="form-group mt-30">
+              <div class="col-autos">
+                <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Enter email" onfocus="this.placeholder = ''"
+                  onblur="this.placeholder = 'Enter email'">
+              </div>
+            </div>
+            <button class="bbtns d-block mt-20 w-100">Subcribe</button>
+          </div>
 
-      {% for num in page_obj.paginator.page_range %}
-        {% if page_obj.number == num %}
-          <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
-        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-          <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
-        {% endif %}
-      {% endfor %}
 
-      {% if page_obj.has_next %}
-        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
-        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
-      {% endif %}
-
-    {% endif %}
+          
+        </div>
+      </div>
+      
 {% endblock content %}
