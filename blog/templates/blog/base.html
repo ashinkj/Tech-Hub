@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Sensive Blog - Home</title>
+  <title>Tech-Hub - Blog</title>
 	<!-- <link rel="icon" href="img/Fevicon.png" type="image/png"> -->
 
   <link rel="stylesheet" href="{% static 'blog/vendors/bootstrap/bootstrap.min.css' %}">
@@ -24,7 +24,7 @@
       <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container box_1620">
           <!-- Brand and toggle get grouped for better mobile display -->
-          <a class="navbar-brand logo_h" href="index.html"><img src="img/logo.png" alt=""></a>
+          <a class="navbar-brand logo_h" href="{% url 'blog-home' %}">Tech Hub</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -44,12 +44,26 @@
               <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Register</a></li>
               {% endif %}
             </ul>
-            <ul class="nav navbar-nav navbar-right navbar-social">
-              <li><a href="#"><i class="ti-facebook"></i></a></li>
-              <li><a href="#"><i class="ti-twitter-alt"></i></a></li>
-              <li><a href="#"><i class="ti-instagram"></i></a></li>
-              <li><a href="#"><i class="ti-skype"></i></a></li>
-            </ul>
+          
+
+
+            <form target="_blank" novalidate="true" action="{% url 'search-page' %}"
+            method="get" class="form-inline">
+            {% csrf_token %}
+            <div class="d-flex flex-row">
+
+              <input class="form-control mr-sm-2" type="search" placeholder="Search Author" aria-label="Search" name="searched">
+
+
+              <button class="click-btn btn btn-default"><span class="lnr lnr-arrow-right"></span></button>
+              <div style="position: absolute; left: -5000px;">
+                <input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value="" type="text">
+              </div>
+
+              
+            </div>
+            <div class="info"></div>
+          </form>
           </div> 
         </div>
       </nav>
@@ -70,13 +84,6 @@
       </div>
     </main>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="{% static 'blog/vendors/jquery/jquery-3.2.1.min.js' %}"></script>
-    <script src="{% static 'blog/vendors/bootstrap/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'blog/vendors/owl-carousel/owl.carousel.min.js' %}"></script>
-    <script src="{% static 'blog/js/jquery.ajaxchimp.min.js' %}"></script>
-    <script src="{% static 'blog/js/mail-script.js' %}"></script>
-    <script src="{% static 'blog/js/main.js' %}"></script>
+    
  </body>
 </html>

@@ -27,10 +27,12 @@
                 {% endif %}
             </form>
          <p class=" mt-2 pt-1"> {{ post.likes.count }} Likes</p>
-         
+         <li><a href="{% url 'user-comment' post.id %}" class="ml-3"><i class="ti-themify-favicon"></i></a></li>
+         <p class=" mt-2 pt-1"> {{ post.comment.count }}</p>
+        </ul>
         {% endif %}
-        <li><a href="{% url 'user-comment' post.id %}" class="ml-3"><i class="ti-themify-favicon"></i></a></li>
-      </ul>
+        <!-- <li><a href="{% url 'user-comment' post.id %}" class="ml-3"><i class="ti-themify-favicon"></i></a></li>
+      </ul> -->
           </div>
           <div class="details mt-20">
             <a href="{% url 'post-detail' post.id %}">
