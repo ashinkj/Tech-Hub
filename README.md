@@ -24,3 +24,10 @@
   <li>only authorised users can like and comment on posts</li>
   
 </ul>
+
+# screenshots
+
+![login page](./Screenshots/login.png)<br/><hr/>
+![Home page](./Screenshots/home.png)<br/><hr/>
+![user posts](./Screenshots/userposts.png)<br/><hr/>
+![logout page](./Screenshots/logout.png)<br/><hr/>
