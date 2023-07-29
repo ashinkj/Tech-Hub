@@ -30,4 +30,7 @@
 ![login page](./Screenshots/login.png)<br/><hr/>
 ![Home page](./Screenshots/home.png)<br/><hr/>
 ![user posts](./Screenshots/userposts.png)<br/><hr/>
+![user profile](./Screenshots/profile.png)<br/><hr/>
+![blog post](./Screenshots/blogpost.png)<br/><hr/>
+![blog comments](./Screenshots/comments.png)<br/><hr/>
 ![logout page](./Screenshots/logout.png)<br/><hr/>
